@@ -1,12 +1,12 @@
 package com.codegym.blog.controller;
 
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/profile")
-public class UserController {
-
+@RequestMapping("/categories")
+public class CategoryController {
 }

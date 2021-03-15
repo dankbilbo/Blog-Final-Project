@@ -6,7 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/profile")
-public class UserController {
-
+public class BlogController {
 }
