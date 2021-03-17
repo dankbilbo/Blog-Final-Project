@@ -40,4 +40,14 @@ public class CategoryController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    //Create
+    @PostMapping
+    public Category createCategory(@RequestBody Category category) {
+        return categoryService.save(category);
+    }
+
+
+
+
 }
