@@ -42,18 +42,18 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
     public User save(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
 
     @Override
     public Optional<User> findById(String id) {
-        return Optional.empty();
+        return userRepository.findById(id);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
         user.setPassword(passwordEncripted);
 
         user.setCreatedAt(LocalDateTime.now());
-        userRepository.save(user);
+        save(user);
 
         String token = UUID.randomUUID().toString();
 

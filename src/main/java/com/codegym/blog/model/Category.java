@@ -20,11 +20,9 @@ import javax.validation.constraints.NotBlank;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty
     private Long id;
 
     @NotBlank(message = "Please enter name")
-    @JsonProperty
     private String name;
 
 }

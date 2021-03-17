@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,25 +18,17 @@ import java.util.Set;
 @AllArgsConstructor
 public class Blog {
     @Id
-    @JsonProperty
     private String id;
-    @JsonProperty
     private String title;
-    @JsonProperty
     private String content;
-    @JsonProperty
     private String shortDescription;
-    @JsonProperty
     private String previewImageURL;
-    @JsonProperty
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JsonProperty
     private Category category;
 
     @ManyToOne
-    @JsonProperty
     private User user;
 
     @ManyToMany
@@ -43,10 +36,8 @@ public class Blog {
             joinColumns = @JoinColumn(name = "blogId"),
             inverseJoinColumns = @JoinColumn(name = "tagId")
     )
-    @JsonProperty
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
-    @JsonProperty
     private Long views = 0l;
 
     // TODO : logic verify ?
@@ -54,4 +45,16 @@ public class Blog {
 
     private boolean status = false;
 
+    public Blog(String title, String content, String shortDescription, String previewImageURL, LocalDateTime createdAt, Category category, User user, List<Tag> tags, Long views, boolean status) {
+        this.title = title;
+        this.content = content;
+        this.shortDescription = shortDescription;
+        this.previewImageURL = previewImageURL;
+        this.createdAt = createdAt;
+        this.category = category;
+        this.user = user;
+        this.tags = tags;
+        this.views = views;
+        this.status = status;
+    }
 }
