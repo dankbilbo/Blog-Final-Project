@@ -1,5 +1,6 @@
 package com.codegym.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,17 +17,25 @@ import java.util.Set;
 @AllArgsConstructor
 public class Blog {
     @Id
+    @JsonProperty
     private String id;
+    @JsonProperty
     private String title;
+    @JsonProperty
     private String content;
+    @JsonProperty
     private String shortDescription;
+    @JsonProperty
     private String previewImageURL;
+    @JsonProperty
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JsonProperty
     private Category category;
 
     @ManyToOne
+    @JsonProperty
     private User user;
 
     @ManyToMany
@@ -34,9 +43,10 @@ public class Blog {
             joinColumns = @JoinColumn(name = "blogId"),
             inverseJoinColumns = @JoinColumn(name = "tagId")
     )
+    @JsonProperty
     private Set<Tag> tags;
 
-
+    @JsonProperty
     private Long views = 0l;
 
     // TODO : logic verify ?
