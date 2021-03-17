@@ -58,6 +58,12 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Update
+    @PutMapping("/{id}")
+    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
+        categoryService.findById(id);
+        return categoryService.save(category);
+    }
 
 
 }
