@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public interface UserRepository extends JpaRepository<User,String> {
     Optional<User> findByUsername(String name);
     Optional<User> findByEmail(String email);
@@ -24,5 +25,13 @@ public interface UserRepository extends JpaRepository<User,String> {
                     " ORDER BY created_at DESC" +
                     " LIMIT 1")
     Optional<User> findLastUserAddedToday(String userCode);
+
+
+    @Query(nativeQuery = true,
+            value = "UPDATE user " +
+                    "SET enabled = TRUE " +
+                    "WHERE email = ?1")
+    @Modifying
+    void enableUser(String email);
 
 }

@@ -13,4 +13,6 @@ public interface UserService extends Service<User> {
 
     Optional<User> findByEmail(String email);
 
+    void enableUserByEmail(String email);
+
 }

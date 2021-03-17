@@ -7,6 +7,7 @@ import com.codegym.blog.repository.UserRepository;
 import com.codegym.blog.repository.UserVerificationTokenRepository;
 import com.codegym.blog.security.PasswordEncoder;
 import com.codegym.blog.service.inteface.UserService;
+import com.codegym.blog.service.inteface.UserVerificationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +33,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private final PasswordEncoder encoder;
 
     @Autowired
-    private final UserVerificationTokenRepository verificationTokenRepository;
+    private final UserVerificationTokenService verificationTokenService;
 
     @Override
     public List<User> findAll(int page, int size) {
@@ -102,14 +103,13 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
         String token = UUID.randomUUID().toString();
 
-        verificationTokenRepository.save(
+        verificationTokenService.save(
                 new UserVerificationToken(
                     token,
                     LocalDateTime.now(),
                     LocalDateTime.now().plusMinutes(15),
                     user
                 ));
-
 
         return token;
     }
@@ -122,6 +122,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void enableUserByEmail(String email) {
+        userRepository.enableUser(email);
     }
 
     String generateId(){
@@ -140,7 +145,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
             String userIdaddedToDatabase = addedUserNumber.substring(2, 6);
             userCode = userCode + userIdaddedToDatabase;
         }else{
-            userCode = userCode + 0001;
+            userCode = userCode + "0001";
         }
         return userCode;
     }
