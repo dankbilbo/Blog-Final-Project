@@ -21,15 +21,15 @@ public class UserVerificationToken {
     private String token;
     private LocalDateTime createdAt;
     private LocalDateTime verifiedAt;
-    private LocalDateTime confirmedAt;
+    private LocalDateTime expiredAt;
 
     @ManyToOne
     private User user;
 
-    public UserVerificationToken(String token, LocalDateTime createdAt, LocalDateTime confirmedAt, User user) {
+    public UserVerificationToken(String token, LocalDateTime createdAt, LocalDateTime expiredAt, User user) {
         this.token = token;
         this.createdAt = createdAt;
-        this.confirmedAt = confirmedAt;
+        this.expiredAt = expiredAt;
         this.user = user;
     }
 }

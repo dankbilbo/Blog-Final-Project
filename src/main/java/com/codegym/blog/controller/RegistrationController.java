@@ -32,9 +32,9 @@ public class RegistrationController {
         return new ResponseEntity<>(registrationService.register(user),HttpStatus.CREATED);
     }
     
-    @GetMapping("{token}")
-    public Response verify(@PathVariable(name = "token") String token){
+    @GetMapping("/token/{token}")
+    public ResponseEntity verify(@PathVariable(name = "token") String token){
         registrationService.verify(token);
-        return new Response();
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
