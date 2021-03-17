@@ -1,4 +1,4 @@
-package com.codegym.blog.service;
+package com.codegym.blog.service.inteface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

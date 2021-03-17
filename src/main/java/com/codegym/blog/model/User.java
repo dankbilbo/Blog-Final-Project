@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -22,16 +23,19 @@ import java.util.Collections;
 public class User implements UserDetails {
     @Id
     private String id;
+    private String firstname;
+    private String lastName;
     private String username;
     private String password;
     private String email;
     private String avatarURL;
+    private LocalDateTime createdAt;
 
     @Enumerated
     private UserRole userRole;
 
     private boolean enabled = false;
-    private boolean locked =false;
+    private boolean locked = false;
 
     // security
 
@@ -70,8 +74,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return enabled;
     }
-
-    //constructor
 
 
     public User(String id,String username, String password, String email, UserRole userRole) {

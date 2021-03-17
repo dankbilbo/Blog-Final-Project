@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -19,17 +19,18 @@ public class Blog {
     private String id;
     private String title;
     private String content;
-    private LocalDate createdAt;
+    private String shortDescription;
+    private String previewImageURL;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     private Category category;
-
 
     @ManyToOne
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "blog_Tags_info",
+    @JoinTable(name = "blog_tags_info",
             joinColumns = @JoinColumn(name = "blogId"),
             inverseJoinColumns = @JoinColumn(name = "tagId")
     )
@@ -43,13 +44,4 @@ public class Blog {
 
     private boolean status = false;
 
-    public Blog(String id, String title, String content, Category category, User user, Set<Tag> tags, boolean status) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.user = user;
-        this.tags = tags;
-        this.status = status;
-    }
 }

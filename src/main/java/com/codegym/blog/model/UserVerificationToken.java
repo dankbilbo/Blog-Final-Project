@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,17 +19,16 @@ public class UserVerificationToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String token;
-    private LocalDate createdAt;
-    private LocalDate verifiedAt;
-    private LocalDate confirmedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime verifiedAt;
+    private LocalDateTime confirmedAt;
 
     @ManyToOne
     private User user;
 
-    public UserVerificationToken(String token, LocalDate createdAt, LocalDate verifiedAt, LocalDate confirmedAt, User user) {
+    public UserVerificationToken(String token, LocalDateTime createdAt, LocalDateTime confirmedAt, User user) {
         this.token = token;
         this.createdAt = createdAt;
-        this.verifiedAt = verifiedAt;
         this.confirmedAt = confirmedAt;
         this.user = user;
     }
