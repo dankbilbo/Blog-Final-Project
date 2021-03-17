@@ -1,12 +1,43 @@
 package com.codegym.blog.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.codegym.blog.model.Category;
+import com.codegym.blog.service.inteface.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/categories")
 public class CategoryController {
+
+    @Autowired
+    CategoryService categoryService;
+
+    //Find All
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<Category>> getAllCategory() {
+        List<Category> categories = categoryService.findAll();
+        if (categories.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        ResponseEntity<List<Category>> responseEntity = new ResponseEntity<>(categories, HttpStatus.OK);
+        return responseEntity;
+    }
+
+    //Find One
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> categoryDetail(@PathVariable Long id) {
+        Optional<Category> category = categoryService.findById(id);
+        if (category.isPresent()) {
+            return new ResponseEntity<>(category.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
