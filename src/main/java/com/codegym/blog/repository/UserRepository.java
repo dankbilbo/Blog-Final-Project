@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,String> {
+public interfagit ce UserRepository extends JpaRepository<User,String> {
     Optional<User> findByUsername(String name);
     Optional<User> findByEmail(String email);
 
