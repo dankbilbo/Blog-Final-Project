@@ -1,5 +1,6 @@
 package com.codegym.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,19 +23,30 @@ import java.util.Collections;
 @AllArgsConstructor
 public class User implements UserDetails {
     @Id
+    @JsonProperty
     private String id;
+    @JsonProperty
     private String firstname;
+    @JsonProperty
     private String lastName;
+    @JsonProperty
     private String username;
+    @JsonProperty
     private String password;
+    @JsonProperty
     private String email;
+    @JsonProperty
     private String avatarURL;
+    @JsonProperty
     private LocalDateTime createdAt;
 
     @Enumerated
+    @JsonProperty
     private UserRole userRole;
 
+    @JsonProperty
     private boolean enabled = false;
+    @JsonProperty
     private boolean locked = false;
     private boolean expired = false;
 
