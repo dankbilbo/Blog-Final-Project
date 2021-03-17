@@ -36,6 +36,7 @@ public class User implements UserDetails {
 
     private boolean enabled = false;
     private boolean locked = false;
+    private boolean expired = false;
 
     // security
 
@@ -57,7 +58,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return !expired;
     }
 
     @Override

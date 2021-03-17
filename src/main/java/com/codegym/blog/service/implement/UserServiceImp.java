@@ -1,6 +1,7 @@
 package com.codegym.blog.service.implement;
 
 import com.codegym.blog.model.User;
+import com.codegym.blog.model.UserRole;
 import com.codegym.blog.model.UserVerificationToken;
 import com.codegym.blog.repository.UserRepository;
 import com.codegym.blog.repository.UserVerificationTokenRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -86,12 +88,10 @@ public class UserServiceImp implements UserService, UserDetailsService {
             throw new IllegalStateException(user.getUsername() + "existed");
         }
 
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
-        String formatedDate = dateFormat.format(date);
+        String userId = generateId();
+        user.setId(userId);
 
-        String userID = "USER" + formatedDate;
-        user.setId(userID);
+        user.setUserRole(UserRole.MEMBER);
 
         String userSignUpPassword = user.getPassword();
         String passwordEncripted = encoder.encoder().encode(userSignUpPassword);
@@ -112,5 +112,36 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
 
         return token;
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    String generateId(){
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
+        String formatedDate = dateFormat.format(date);
+        String userCode = "USER" + formatedDate;
+        Optional<User> lastUserAddedToday = userRepository.findLastUserAddedToday(userCode + "%");
+        boolean userAddedTodayExist  = lastUserAddedToday.isPresent();
+
+        if (userAddedTodayExist) {
+            String lastAddedNumber = lastUserAddedToday.get().getId().substring(12, 16);
+            Double lastAddediId = Double.parseDouble(lastAddedNumber);
+            Double userIdNumber = lastAddediId + 1.0d;
+            String addedUserNumber = BigDecimal.valueOf(userIdNumber/10000).toPlainString();
+            String userIdaddedToDatabase = addedUserNumber.substring(2, 6);
+            userCode = userCode + userIdaddedToDatabase;
+        }else{
+            userCode = userCode + 0001;
+        }
+        return userCode;
     }
 }

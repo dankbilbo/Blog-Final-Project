@@ -19,14 +19,14 @@ public class RegistrationServiceImp implements RegistrationService {
     private final EmailService emailService;
 
     @Override
-    public String register(User user) {
+    public User register(User user) {
         String token = userService.signUpUser(user);
 
         String linkVerify = "http://localhost:8080/register?token=" + token;
         String content = "please verify your account by clicking this link " + linkVerify;
         String topic = "Pro Hub verify account";
         emailService.sendEmail(user.getEmail(),content,topic);
-        return "email sended to " + user.getEmail();
+        return user;
     }
 
     @Override
